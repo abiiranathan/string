@@ -244,6 +244,46 @@ void test_regex_sub_match() {
   free(sub_match2);
 }
 
+void test_string_trimspace() {
+  // Test string_trimspace
+  {
+    string *str = string_alloc("   Hello, World!   ");
+    assert(str);
+
+    string_trimspace(str);
+    printf("\"%s\"\n", str->data);
+    assert(strcmp(str->data, "Hello, World!") == 0);
+
+    string_destroy(str);
+  }
+
+  // Test string_ltrimspace
+  {
+    string *str = string_alloc("   Hello, World!   ");
+    assert(str);
+
+    string_ltrimspace(str);
+    printf("\"%s\"\n", str->data);
+
+    assert(strcmp(str->data, "Hello, World!   ") == 0);
+
+    string_destroy(str);
+  }
+
+  // Test string_rtrimspace
+  {
+    string *str = string_alloc("   Hello, World!   ");
+    assert(str);
+
+    string_rtrimspace(str);
+    printf("\"%s\"\n", str->data);
+
+    assert(strcmp(str->data, "   Hello, World!") == 0);
+
+    string_destroy(str);
+  }
+}
+
 int main() {
   test_string_init();
   test_str_concat();
@@ -269,5 +309,6 @@ int main() {
   test_str_startswith();
   test_str_endswith();
   test_regex_sub_match();
+  test_string_trimspace();
   return 0;
 }

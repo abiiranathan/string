@@ -242,4 +242,13 @@ bool string_endswith(const string *s, const char *suffix);
  */
 bool string_match(const string *str, const char *regex);
 
+// Remove leading and trailing white space from string
+void string_trimspace(string *str);
+
+// Remove leading white space from string
+void string_rtrimspace(string *str);
+
+// Remove trailing white space string
+void string_ltrimspace(string *str);
+
 #endif /* __STRING_H__ */

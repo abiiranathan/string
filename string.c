@@ -1,4 +1,5 @@
 #include "string.h"
+#include <ctype.h>
 #include <stddef.h>
 
 string *string_alloc(const char *initial_data) {
@@ -407,4 +408,84 @@ char *regex_sub_match(const char *str, const char *regex, int capture_group) {
 
   regfree(&compiled_regex);
   return sub_match;
+}
+
+// Remove leading and trailing white space from string
+void string_trimspace(string *str) {
+  if (str->length == 0) {
+    return;
+  }
+
+  size_t start = 0;
+  size_t end = str->length - 1;
+
+  // Find the first non-whitespace character from the start
+  while (start <= end && isspace(str->data[start])) {
+    start++;
+  }
+
+  // Find the last non-whitespace character from the end
+  while (end > start && isspace(str->data[end])) {
+    end--;
+  }
+
+  // Calculate the new length after trimming
+  size_t new_length = end - start + 1;
+
+  // If the string was completely trimmed, clear it
+  if (new_length == 0) {
+    string_clear(str);
+  } else {
+    // Shift the non-whitespace characters to the beginning
+    memmove(str->data, str->data + start, new_length);
+    str->data[new_length] = '\0';
+    str->length = new_length;
+  }
+}
+
+// Remove leading white space from string
+void string_ltrimspace(string *str) {
+  if (str->length == 0) {
+    return;
+  }
+
+  size_t start = 0;
+
+  // Find the first non-whitespace character from the start
+  while (start < str->length && isspace(str->data[start])) {
+    start++;
+  }
+
+  // Calculate the new length after trimming
+  size_t new_length = str->length - start;
+
+  // Shift the non-whitespace characters to the beginning
+  memmove(str->data, str->data + start, new_length);
+  str->data[new_length] = '\0';
+  str->length = new_length;
+}
+
+// Remove trailing white space from string
+void string_rtrimspace(string *str) {
+  if (str == NULL || str->length == 0) {
+    return;
+  }
+
+  size_t end = str->length - 1;
+
+  // Find the last non-whitespace character from the end
+  while (end > 0 && isspace(str->data[end])) {
+    end--;
+  }
+
+  // Calculate the new length after trimming
+  size_t new_length = end + 1;
+
+  // If the string was completely trimmed, clear it
+  if (new_length == 0) {
+    string_clear(str);
+  } else {
+    str->data[new_length] = '\0';
+    str->length = new_length;
+  }
 }
