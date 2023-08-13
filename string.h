@@ -19,7 +19,7 @@ typedef struct string {
 } string;
 
 /**
- * Allocate and initialize a new string with the given initial data.
+ * @brief Allocate and initialize a new string with the given initial data.
  *
  * @param initial_data The initial data for the string.
  * @return A pointer to the allocated string structure.
@@ -27,7 +27,7 @@ typedef struct string {
 string *string_alloc(const char *initial_data);
 
 /**
- * Resize the capacity of the string to the given new capacity.
+ * @brief Resize the capacity of the string to the given new capacity.
  *
  * @param str Pointer to the pointer of the string structure.
  * @param new_capacity The new capacity to resize the string to.
@@ -35,14 +35,14 @@ string *string_alloc(const char *initial_data);
 void string_resize(string **str, size_t new_capacity);
 
 /**
- * Destroy and free the memory allocated for the string.
+ * @brief Destroy and free the memory allocated for the string.
  *
  * @param str Pointer to the string structure to be destroyed.
  */
 void string_destroy(string *str);
 
 /**
- * Append the specified string to the end of the string.
+ * @brief Append the specified string to the end of the string.
  *
  * @param str Pointer to the pointer of the string structure.
  * @param append_str The string to append.
@@ -50,14 +50,14 @@ void string_destroy(string *str);
 void string_append(string **str, const char *append_str);
 
 /**
- * Clear the contents of the string, setting its length to 0.
+ * @brief Clear the contents of the string, setting its length to 0.
  *
  * @param str Pointer to the string structure to be cleared.
  */
 void string_clear(string *str);
 
 /**
- * Get the character at the specified index in the string.
+ * @brief Get the character at the specified index in the string.
  *
  * @param str Pointer to the string structure.
  * @param index The index of the character to retrieve.
@@ -66,7 +66,7 @@ void string_clear(string *str);
 char string_get_char(const string *str, size_t index);
 
 /**
- * Find the first occurrence of a substring within the string.
+ * @brief Find the first occurrence of a substring within the string.
  *
  * @param str Pointer to the string structure.
  * @param sub_str The substring to search for.
@@ -76,7 +76,8 @@ char string_get_char(const string *str, size_t index);
 ssize_t string_find(const string *str, const char *sub_str);
 
 /**
- * Perform regular expression matching and return the matched capture group.
+ * @brief Perform regular expression matching and return the matched capture
+ * group.
  *
  * @param str The input string to perform matching on.
  * @param regex The regular expression pattern to match.
@@ -86,7 +87,7 @@ ssize_t string_find(const string *str, const char *sub_str);
 char *regex_sub_match(const char *str, const char *regex, int capture_group);
 
 /**
- * Check if the string contains a specific substring.
+ * @brief Check if the string contains a specific substring.
  *
  * @param str Pointer to the string structure.
  * @param substring The substring to check for.
@@ -95,7 +96,7 @@ char *regex_sub_match(const char *str, const char *regex, int capture_group);
 bool string_contains(const string *str, const char *substring);
 
 /**
- * Insert the specified string at the given index within the string.
+ * @brief Insert the specified string at the given index within the string.
  *
  * @param str Pointer to the pointer of the string structure.
  * @param index The index at which to insert the string.
@@ -104,44 +105,44 @@ bool string_contains(const string *str, const char *substring);
 void string_insert(string **str, size_t index, const char *insert_str);
 
 /**
- * Convert all characters in the string to uppercase.
+ * @brief Convert all characters in the string to uppercase.
  *
  * @param str Pointer to the string structure to be converted.
  */
 void string_toupper(string *str);
 
 /**
- * Convert all characters in the string to lowercase.
+ * @brief Convert all characters in the string to lowercase.
  *
  * @param str Pointer to the string structure to be converted.
  */
 void string_tolower(string *str);
 
 /**
- * Convert the string to camel case format.
+ * @brief Convert the string to camel case format.
  *
  * @param str Pointer to the string structure to be converted.
  */
 void string_to_camelcase(string *str);
 
 /**
- * Convert the first letter of each word to uppercase, making the string title
- * case.
+ * @brief Convert the first letter of each word to uppercase, making the string
+ * title case.
  *
  * @param str Pointer to the string structure to be converted.
  */
 void string_to_titlecase(string *str);
 
 /**
- * Convert the string to snake case format.
+ * @brief Convert the string to snake case format.
  *
  * @param str Pointer to the pointer of the string structure.
  */
 void string_to_snakecase(string **str);
 
 /**
- * Remove a specified number of characters from the string, starting from the
- * given index.
+ * @brief Remove a specified number of characters from the string, starting from
+ * the given index.
  *
  * @param s Pointer to the pointer of the string structure.
  * @param index The starting index of removal.
@@ -150,14 +151,14 @@ void string_to_snakecase(string **str);
 void string_remove(string **s, size_t index, size_t count);
 
 /**
- * Reverse the characters in the string.
+ * @brief Reverse the characters in the string.
  *
  * @param s Pointer to the string structure to be reversed.
  */
 void string_reverse(string *s);
 
 /**
- * Replace the first occurrence of a substring with another string.
+ * @brief Replace the first occurrence of a substring with another string.
  *
  * @param str Pointer to the pointer of the string structure.
  * @param find_str The substring to find.
@@ -167,7 +168,7 @@ void string_replace(string **str, const char *find_str,
                     const char *replace_str);
 
 /**
- * Replace all occurrences of a substring with another string.
+ * @brief Replace all occurrences of a substring with another string.
  *
  * @param str Pointer to the pointer of the string structure.
  * @param find_str The substring to find.
@@ -177,7 +178,7 @@ void string_replace_all(string **str, const char *find_str,
                         const char *replace_str);
 
 /**
- * Join an array of strings using a specified delimiter.
+ * @brief Join an array of strings using a specified delimiter.
  *
  * @param strings An array of strings to be joined.
  * @param num_strings The number of strings in the array.
@@ -188,7 +189,7 @@ string *string_join(const char *strings[], size_t num_strings,
                     const char *delimiter);
 
 /**
- * Split the string into an array of substrings based on a delimiter.
+ * @brief Split the string into an array of substrings based on a delimiter.
  *
  * @param str Pointer to the string structure to be split.
  * @param delimiter The delimiter character used for splitting.
@@ -198,7 +199,8 @@ string *string_join(const char *strings[], size_t num_strings,
 string **string_split(string *str, char delimiter, size_t *num_tokens);
 
 /**
- * Free the dynamically allocated memory for an array of substrings.
+ * @brief Free the dynamically allocated memory for an array of substrings.
+ * May be used to free memory allocated with string_split (as an example)
  *
  * @param substrings An array of string pointers to be freed.
  * @param num_substrings The number of substrings in the array.
@@ -206,7 +208,7 @@ string **string_split(string *str, char delimiter, size_t *num_tokens);
 void substring_free(string **substrings, size_t num_substrings);
 
 /**
- * Extract a substring from the original string.
+ * @brief Extract a substring from the original string.
  *
  * @param str Pointer to the original string structure.
  * @param start The starting index of the substring.
@@ -216,7 +218,7 @@ void substring_free(string **substrings, size_t num_substrings);
 string *string_substr(const string *str, size_t start, size_t length);
 
 /**
- * Check if the string starts with a specified prefix.
+ * @brief Check if the string starts with a specified prefix.
  *
  * @param s Pointer to the string structure.
  * @param prefix The prefix to check.
@@ -225,7 +227,7 @@ string *string_substr(const string *str, size_t start, size_t length);
 bool string_startswith(const string *s, const char *prefix);
 
 /**
- * Check if the string ends with a specified suffix.
+ * @brief Check if the string ends with a specified suffix.
  *
  * @param s Pointer to the string structure.
  * @param suffix The suffix to check.
@@ -234,7 +236,7 @@ bool string_startswith(const string *s, const char *prefix);
 bool string_endswith(const string *s, const char *suffix);
 
 /**
- * Check if the string matches a specified regular expression.
+ * @brief Check if the string matches a specified regular expression.
  *
  * @param str Pointer to the string structure.
  * @param regex The regular expression pattern to match.
@@ -242,13 +244,19 @@ bool string_endswith(const string *s, const char *suffix);
  */
 bool string_match(const string *str, const char *regex);
 
-// Remove leading and trailing white space from string
-void string_trimspace(string *str);
+/** @brief Remove leading and trailing white space from string
+ * @param str Pointer to the string structure.
+ */
+void string_trim(string *str);
 
-// Remove leading white space from string
-void string_rtrimspace(string *str);
+/** @brief Remove trailing white space from string
+ * @param str Pointer to the string structure.
+ */
+void string_rtrim(string *str);
 
-// Remove trailing white space string
-void string_ltrimspace(string *str);
+/** @brief Remove leading white space from string
+ * @param str Pointer to the string structure.
+ */
+void string_ltrim(string *str);
 
 #endif /* __STRING_H__ */

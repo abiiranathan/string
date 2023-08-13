@@ -250,7 +250,7 @@ void test_string_trimspace() {
     string *str = string_alloc("   Hello, World!   ");
     assert(str);
 
-    string_trimspace(str);
+    string_trim(str);
     printf("\"%s\"\n", str->data);
     assert(strcmp(str->data, "Hello, World!") == 0);
 
@@ -262,7 +262,7 @@ void test_string_trimspace() {
     string *str = string_alloc("   Hello, World!   ");
     assert(str);
 
-    string_ltrimspace(str);
+    string_ltrim(str);
     printf("\"%s\"\n", str->data);
 
     assert(strcmp(str->data, "Hello, World!   ") == 0);
@@ -275,7 +275,7 @@ void test_string_trimspace() {
     string *str = string_alloc("   Hello, World!   ");
     assert(str);
 
-    string_rtrimspace(str);
+    string_rtrim(str);
     printf("\"%s\"\n", str->data);
 
     assert(strcmp(str->data, "   Hello, World!") == 0);

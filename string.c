@@ -1,6 +1,6 @@
 #include "string.h"
-#include <ctype.h>
-#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 string *string_alloc(const char *initial_data) {
   size_t length = strlen(initial_data);
@@ -23,6 +23,11 @@ void string_resize(string **str, size_t new_capacity) {
   if (new_str) {
     new_str->capacity = new_capacity;
     *str = new_str;
+  } else {
+    printf("string_resize(): realloc: unable to allocate memory of capacity: "
+           "%zu\n",
+           new_capacity);
+    exit(EXIT_FAILURE);
   }
 }
 
@@ -46,13 +51,11 @@ void string_append(string **str, const char *append_str) {
   (*str)->data[new_len] = '\0';
 }
 
-// Function to clear the content of the string
 void string_clear(string *str) {
   str->length = 0;
   str->data[0] = '\0';
 }
 
-// Function to get the character at a specific index
 char string_get_char(const string *str, size_t index) {
   if (index < str->length) {
     return str->data[index];
@@ -60,7 +63,6 @@ char string_get_char(const string *str, size_t index) {
   return '\0'; // Invalid index
 }
 
-// Function to find the index of a substring
 ssize_t string_find(const string *str, const char *sub_str) {
   char *pos = strstr(str->data, sub_str);
   if (pos) {
@@ -73,7 +75,6 @@ bool string_contains(const string *str, const char *substring) {
   return strstr(str->data, substring) != NULL;
 }
 
-// Function to insert a substring at a specific index
 void string_insert(string **str, size_t index, const char *insert_str) {
   if (index > (*str)->length) {
     return; // Invalid index
@@ -96,10 +97,17 @@ void string_insert(string **str, size_t index, const char *insert_str) {
   (*str)->length = new_len;
 }
 
-// Function to join an array of const char* strings with a delimiter
 string *string_join(const char *strings[], size_t num_strings,
                     const char *delimiter) {
-  string *result = string_alloc("");
+  string *result = string_alloc(""); // joined string
+
+  // ensure result string has enough capacity to avoid multiple re-allocations
+  size_t capacity = num_strings; // (number of delemiters) -1 + '\0'
+  for (size_t i = 0; i < num_strings; i++) {
+    capacity += strlen(strings[i]);
+  }
+  string_resize(&result, capacity); // ensure enough capacity
+
   for (size_t i = 0; i < num_strings; i++) {
     string_append(&result, strings[i]);
 
@@ -110,13 +118,11 @@ string *string_join(const char *strings[], size_t num_strings,
   return result;
 }
 
-// Function to split a string into an array of substrings using a delimiter
 string **string_split(string *str, char delimiter, size_t *num_tokens) {
   size_t tokens_capacity = 8;
   string **tokens = malloc(tokens_capacity * sizeof(string *));
   if (!tokens) {
-    *num_tokens = 0;
-    return NULL;
+    goto error;
   }
 
   size_t token_count = 0;
@@ -126,18 +132,28 @@ string **string_split(string *str, char delimiter, size_t *num_tokens) {
       tokens_capacity *= 2;
       tokens = realloc(tokens, tokens_capacity * sizeof(string *));
       if (!tokens) {
-        *num_tokens = 0;
-        return NULL;
+        goto error;
       }
     }
 
-    tokens[token_count] = string_alloc(token);
+    // Allocate a string token
+    string *stoken = string_alloc(token);
+    if (stoken == NULL) {
+      goto error;
+    }
+
+    tokens[token_count] = stoken;
     token_count++;
     token = strtok(NULL, &delimiter);
   }
 
   *num_tokens = token_count;
   return tokens;
+
+error:
+  perror("unable to allocate memory for string");
+  *num_tokens = 0;
+  return NULL;
 }
 
 void substring_free(string **substrings, size_t num_substrings) {
@@ -411,7 +427,7 @@ char *regex_sub_match(const char *str, const char *regex, int capture_group) {
 }
 
 // Remove leading and trailing white space from string
-void string_trimspace(string *str) {
+void string_trim(string *str) {
   if (str->length == 0) {
     return;
   }
@@ -444,7 +460,7 @@ void string_trimspace(string *str) {
 }
 
 // Remove leading white space from string
-void string_ltrimspace(string *str) {
+void string_ltrim(string *str) {
   if (str->length == 0) {
     return;
   }
@@ -466,7 +482,7 @@ void string_ltrimspace(string *str) {
 }
 
 // Remove trailing white space from string
-void string_rtrimspace(string *str) {
+void string_rtrim(string *str) {
   if (str == NULL || str->length == 0) {
     return;
   }
